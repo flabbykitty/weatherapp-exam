@@ -12,16 +12,23 @@ class App extends React.Component {
 	handleSearch = (city) => {
 		axios.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=metric&appid=a9f6719e37f20890ebff5d91724dec1f')
 			.then(response => {
+				let conditionsArray = []
+				
+				response.data.weather.forEach(w => {
+					conditionsArray.push(w)
+				})
+				
 				this.setState({
 					errorMessage: false,
 					report: {
-						city,
+						city: response.data.name,
 						temp: Math.round(response.data.main.temp * 10 ) / 10,
-						humidity: response.data.main.humidity
+						humidity: response.data.main.humidity,
+						conditions: conditionsArray
 					}
 				})
 			})
-			.catch((err) => {
+			.catch(() => {
 				this.setState({
 					errorMessage: true,
 					report: null
