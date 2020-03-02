@@ -15,6 +15,8 @@ class SearchCity extends React.Component {
 	handleSearch = (e) => {
 		e.preventDefault()
 
+		this.props.onSearch(this.state.search)
+
 		this.setState({
 			search: ''
 		})
